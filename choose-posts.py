@@ -5,22 +5,46 @@ postHasBody = re.compile(r'<row.*Body="([^"]*)" .*/>', re.IGNORECASE);
 
 if __name__=="__main__":
     orig_fileName = 'posts.xml';
-    copied_fileName = "copied-"+orig_fileName;
+    training_fileName = "training-"+orig_fileName;
+    test_fileName = "test-"+orig_fileName;
 
-    copiedPosts = 0;
+    validPosts = 0;
 
-    writeToFile = open(copied_fileName, 'w');
-    writeToFile.write('<?xml version="1.0" encoding="utf-8"?>\n');
-    writeToFile.write('<posts>\n');
+    writeToTrainingFile = open(training_fileName, 'w');
+    writeToTrainingFile.write('<?xml version="1.0" encoding="utf-8"?>\n');
+    writeToTrainingFile.write('<posts>\n');
+    
+    writeToTestFile = open(test_fileName, 'w');
+    writeToTestFile.write('<?xml version="1.0" encoding="utf-8"?>\n');
+    writeToTestFile.write('<posts>\n');
 
     for line in open(orig_fileName, 'r'):
         tagsMatcher = postHasTags.match(line.strip());
         bodyMatcher = postHasBody.match(line.strip());
         if tagsMatcher and bodyMatcher:
-            writeToFile.write(line);
-            copiedPosts +=1;
+            validPosts+=1;
 
-    writeToFile.write('</posts>');
-    writeToFile.close();
+    testPosts=0;
+    copiedPosts=0;
 
-    print str(copiedPosts)+" posts copied.";
+    for line in open(orig_fileName, "r"):
+        tagsMatcher = postHasTags.match(line.strip());
+        bodyMatcher = postHasBody.match(line.strip());
+        if tagsMatcher and bodyMatcher:
+            if(copiedPosts%10==0):
+                print "Using post number "+str(copiedPosts);
+                testPosts+=1;
+                writeToTestFile.write(line);
+            else:
+                writeToTrainingFile.write(line);
+
+            copiedPosts+=1;
+
+    writeToTrainingFile.write('</posts>');
+    writeToTrainingFile.close();
+
+    writeToTestFile.write('</posts>');
+    writeToTestFile.close();
+
+    print str(copiedPosts)+" posts in training set.";
+    print str(testPosts)+" posts in test set.";
