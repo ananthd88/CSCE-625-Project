@@ -13,6 +13,7 @@ class OneVsRest:
       self.classifier = Pipeline([
          ('vectorizer', CountVectorizer(min_n=1,max_n=2)),
          ('tfidf', TfidfTransformer()),
+         #('clf', OneVsRestClassifier(LinearSVC(), n_jobs = -2))])
          ('clf', OneVsRestClassifier(LinearSVC(class_weight='auto'), n_jobs = -2))])
       timer = Timer.Timer("Training")
       self.classifier.fit(X, Y)

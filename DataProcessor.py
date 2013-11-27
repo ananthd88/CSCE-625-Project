@@ -105,7 +105,7 @@ class DataProcessor:
       return numpy.array(X)
    def getTagVectors(self, rows, tags):
       Y = [[] for i in range(len(rows))]
-      tagIndex = 0
+      #tagIndex = 0
       for tag in tags:
          rowIndex = 0
          for row in rows:
@@ -113,7 +113,7 @@ class DataProcessor:
                #Y[rowIndex].append(tagIndex)
                Y[rowIndex].append(tag)
             rowIndex += 1
-         tagIndex += 1
+         #tagIndex += 1
       return Y
    def getTagVector(self, rows, tag):
       Y = []

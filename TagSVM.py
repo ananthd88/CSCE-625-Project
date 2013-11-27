@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import Timer
 import DataProcessor
 import SVMClassifier
@@ -10,7 +11,7 @@ def main():
    trainingSet = []
    dictionary = set()
    tags = []
-   processor.compileTrainingSet("posts.xml", 1, trainingSet, dictionary, 161, tags)
+   processor.compileTrainingSet("posts.xml", 1, trainingSet, dictionary, 20, tags)
    print "Size of training set = " + str(len(trainingSet))
    
    # Gather and clean test set data

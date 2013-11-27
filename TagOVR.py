@@ -1,3 +1,4 @@
+#!/usr/bin/python
 import Timer
 import DataProcessor
 import OneVsRest
@@ -52,6 +53,7 @@ def main():
       for row in testSet:
          predictions = set(predicted[rowIndex])
          actuals     = testSet[rowIndex]["Tags"]
+         # TODO: actuals may include the rare tags that were ignored, thus messing up the metrics
          if tag in actuals:
             if tag in predictions:     # Tag among actual tags, Tag among predictions
                metrics[tag]["TP"] += 1
