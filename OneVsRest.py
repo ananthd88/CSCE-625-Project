@@ -11,7 +11,7 @@ class OneVsRest:
       return
    def train(self, X, Y):
       self.classifier = Pipeline([
-         ('vectorizer', CountVectorizer(min_n=1,max_n=2)),
+         ('vectorizer', CountVectorizer()),
          ('tfidf', TfidfTransformer()),
          #('clf', OneVsRestClassifier(LinearSVC(), n_jobs = -2))])
          ('clf', OneVsRestClassifier(LinearSVC(class_weight='auto'), n_jobs = -2))])
